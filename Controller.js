@@ -15,7 +15,7 @@ let item=models.Item;
 let armazenamentoItem=models.ArmazenamentoItem;
 let promocao=models.Promocao;
 let lista=models.Lista;
-let listaPromocao=models.ListaPromocao;
+let listaPromocao=models.listaPromocao;
 
 //Rotas do projeto
 app.get('/test',(req,res)=>{
@@ -34,6 +34,7 @@ app.post('/login', async(req,res)=>{
 });
 //Criação do Usuario no banco
 app.post('/cadrastroUsuario',async (req,res)=>{
+    let usaurioId='';
     let response=await usuario.findOne({
         where:{usuario:req.body.usuario}
     });
@@ -43,11 +44,16 @@ app.post('/cadrastroUsuario',async (req,res)=>{
             usuario: req.body.usuario,
             senha: req.body.senha
             
-        }),
+        }).then((response)=>{
+                usaurioId+=response.id;
+        });
         res.send(JSON.stringify('Usuario criado com sucesso'));
     }else{
         res.send(JSON.stringify('Usuario já existe no sistema'))
     }
+    await lista.create({
+        usuarioId: usaurioId
+    })
     
 });
 
@@ -80,6 +86,64 @@ app.post('/cadrastroItem',async (req,res)=>{
     res.send(JSON.stringify('item criado com sucesso'));
     // console.log(req.body);
 });
+app.post('/DiminuirItem', async (req,res)=> {
+    let update=await Usuario.findByPk(req.body.id,
+        {include:[{all:true}]}
+        ).then((response)=>{
+            // response.Armazenamento[0].local='Nova Cidade';
+            // response.Trackings[0].save();
+            console.log(response);
+    });
+});
+
+//Criar Lista de compras e o relacionamento entre eles
+app.post('/criarLista',async (req,res)=>{
+    console.log(req.body);
+    await listaPromocao.create({
+        promocaoId: req.body.idItem,
+        listaId: req.body.idLista,
+        qtd:1
+    });  
+});
+app.get('/listaLista', async (req,res)=>{
+    try {
+        const read = await lista.findAll({
+            include: [
+                {
+                    model: promocao,
+                    through: { attributes: [] }
+                },
+            ],
+        });
+        return res.status(200).json(read);
+    } catch (error) {
+        return res.status(500).json({ err });
+    }
+});
+
+//recebe os dados do banco de dados e mostra
+app.get('/listaPromocao', async (req,res)=>{
+    let read=await promocao.findAll({
+        raw:true,
+    });
+    res.send(read);
+    // console.log(read);
+});
+
+
+//Cadrastro da Promoção no banco
+app.post('/cadrastroPromocao',async (req,res)=>{
+    await promocao.create({
+        nome: req.body.nome,
+        local: req.body.local,
+        valor: req.body.valor
+        
+    }),
+    res.send(JSON.stringify('Promocao adicionada com sucesso'));
+    // console.log(req.body);
+});
+
+
 
 
 let port=process.env.PORT || 3000;

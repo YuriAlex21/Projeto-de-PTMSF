@@ -39,7 +39,7 @@ export default function AddProduto({navigation}) {
     });
     let json=await response.json();
     setMsg(json);
-}
+    }
 
 
 
@@ -49,16 +49,16 @@ export default function AddProduto({navigation}) {
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={[css.container, css.darkbg]}
     >   
-        <View>
-            <Text style={css.Crad__msg}>{msg}</Text>
-        </View>
-        <View style={css.login__form}>
-            <TextInput style={css.login__input} placeholder='Nome' onChangeText={text=>setNome(text)}/>
-            <TextInput style={css.login__input} placeholder='Codigo de Barra' onChangeText={text=>setCodigo(text)}/>
-            <TouchableOpacity style={[css.login__button, css.button__left2]} onPress={()=>sendForm()}> 
-                <Text style={css.login__buttonText}>Cadrastrar</Text>
-            </TouchableOpacity>
-        </View> 
-    </KeyboardAvoidingView>
+            <View>
+                <Text style={css.Crad__msg}>{msg}</Text>
+            </View>
+            <View style={css.login__form}>
+                <TextInput style={css.login__input} placeholder='Nome' onChangeText={text=>setNome(text)}/>
+                <TextInput style={css.login__input} placeholder='Codigo de Barra' onChangeText={text=>setCodigo(text)}/>
+                <TouchableOpacity style={[css.login__button, css.button__left2]} onPress={()=>sendForm()}> 
+                    <Text style={css.login__buttonText}>Cadrastrar</Text>
+                </TouchableOpacity>
+            </View> 
+        </KeyboardAvoidingView>
     );
 }   

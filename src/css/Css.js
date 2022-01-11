@@ -70,6 +70,11 @@ const css = StyleSheet.create({
     fontSize: 22,
     color: '#fff'
   },
+  lista__PromoText:{
+    marginBottom: 10,
+    fontSize: 22,
+    color: '#4D4A4A'
+  },
   area__menu:{
     flexDirection: 'row',
     paddingTop: 60,
@@ -119,6 +124,23 @@ button__right:{
 },
 button__Size:{
   width: '40%',
+},
+Add__button:{
+  padding: 12,
+  backgroundColor: "#1668D8",
+  alignSelf:"center",
+  borderRadius:5,
+  marginLeft:10
+  
+},
+view__ListaProd:{
+  backgroundColor: '#C0F0DD',
+  borderRadius:5,
+  padding: 30,
+  marginBottom: 5,
+  marginRight: 10,
+  flexDirection:'column',
+  alignItems:'flex-start'
 }
 });
 export {css};

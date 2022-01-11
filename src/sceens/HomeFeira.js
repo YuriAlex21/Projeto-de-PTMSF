@@ -10,7 +10,7 @@ export default function HomeFeira({navigation}) {
     return (
         <View style={[css.container, css.containerTop]}>
             <MenuTop  title='Estoque' navigation={navigation}/>
-            <Text>Menu para o gerecionamento de feira</Text>
+            {/* <Text>Menu para o gerecionamento de feira</Text> */}
             <View style={[css.container2,css.button_up]}>
                 <TouchableOpacity style={[css.login__button,css.button__right,css.button__Size]} onPress={()=>navigation.navigate('AddProduto')}> 
                     <Image source={require('../../assets/Addprodutos.png')}/>
